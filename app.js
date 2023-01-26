@@ -14,16 +14,18 @@
 // getting-started.js
 const express = require("express")
 const path = require("path")
+const bodyparser = require("body-parser")
 const app=express()
 const port=8080
 
+app.use("/static", express.static("static"))
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", 'html')
 app.set("views", path.join(__dirname, "views"))
 
-app.get("/", (res, req)=>{
-    const params={}
-    res.status(200).render("index.html", params)
+app.get("/", (req, res)=>{
+    // const params={}
+    res.status(200).sendFile("index.html", { root: __dirname })
 })
 
 const mongoose = require('mongoose');
