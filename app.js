@@ -23,11 +23,6 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", 'html')
 app.set("views", path.join(__dirname, "views"))
 
-app.get("/", (req, res)=>{
-    // const params={}
-    res.status(200).sendFile("index.html", { root: __dirname })
-})
-
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', true);
 main().catch(err => console.log(err));
@@ -54,12 +49,37 @@ const schema = new mongoose.Schema({
 
 const user = mongoose.model('user', schema);
 
-const user1 = new user({ name: 'user1' , email:'user1@gmail.com', contact:1234567891, password: "user123"});
+// const user1 = new user({ name: 'user1' , email:'user1@gmail.com', contact:1234567891, password: "user123"});
+// user1.save();
+var data1;
+user.find(function(err, a){
+    if(err) return error(err)
+    data1=a;
+    console.log(a)
+    console.log(data1[0].name)
+    console.log(data1[0].email)
+    console.log(data1[0].contact)
+    console.log(data1[0].password)
+})
 
-user1.save();
+app.get("/", (req, res)=>{
+    // const params={}
+    res.status(200).sendFile( __dirname+"/index.html", {data:data1})
+})
 
-// let a= user.find({ name: user1 });
-// console.log(a)
+app.post("/contact", (req, res)=>{
+    var mydata=new user(req.body)
+    mydata.save().then(()=>{
+        console.log(req.body)
+        res.send("contact form saved")
+        console.log('data saved')
+    }).catch(()=>{
+        res.status(400).send("Some error occured")
+        console.log('data not saved')
+    })
+    // res.status(200).sendFile("index.html", { root: __dirname })
+    res.status(200).sendFile( __dirname+"/index.html", {data: data1})
+})
 
 app.listen(port, ()=>{
     console.log("Website hosted")

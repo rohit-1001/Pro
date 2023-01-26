@@ -11,12 +11,16 @@
 <body>
     <div>
         <form method="post" action="/contact">
-            <input class="input" id="one" type="text" placeholder="Enter your name">
-            <input class="input" id="one" type="email" placeholder="Enter your email">
-            <input class="input" id="one" type="phone" placeholder="Enter your contact no.">
-            <input class="input" id="one" type="password" placeholder="Enter your password">
-            <input type="button" id="btn" value="Submit">
+            <input class="input" id="one" type="text" name="name" placeholder="Enter your name">
+            <input class="input" id="one" type="email" name="email" placeholder="Enter your email">
+            <input class="input" id="one" type="phone" name="contact" placeholder="Enter your contact no.">
+            <input class="input" id="one" type="password" name="password" placeholder="Enter your password">
+            <button id="btn" type="submit">Submit</button>
         </form>
     </div>
+    <p>{{data[1].name}}</p>
+    <p>{{data[1].email}}</p>
+    <p>{{data[1].contact}}</p>
+    <p>{{data[1].password}}</p>
 </body>
 </html>
