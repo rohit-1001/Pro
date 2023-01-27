@@ -15,12 +15,14 @@
             <input class="input" id="one" type="email" name="email" placeholder="Enter your email">
             <input class="input" id="one" type="phone" name="contact" placeholder="Enter your contact no.">
             <input class="input" id="one" type="password" name="password" placeholder="Enter your password">
-            <button id="btn" type="submit">Submit</button>
+            <button id="btn">Submit</button>
         </form>
     </div>
-    <p>{{data[1].name}}</p>
-    <p>{{data[1].email}}</p>
-    <p>{{data[1].contact}}</p>
-    <p>{{data[1].password}}</p>
+    <!-- <p id="name">{{data[0].name}}</p> -->
+    <p>${"data[0].name"}</p>
+    <p>${{data[0].email}}</p>
+    <p>${{data[0].contact}}</p>
+    <p>${{data[0].password}}</p>
 </body>
+<!-- <script type="module" src="./fetchData.js" defer></script> -->
 </html>
