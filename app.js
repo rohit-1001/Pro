@@ -54,14 +54,27 @@ const user = mongoose.model('user', schema);
 // user1.save();
 
 var data1;
-user.find().lean().then(res=>{
-        data1=res;
-        console.log(res)
-        console.log(res[0].name)
-        console.log(res[0].email)
-        console.log(res[0].contact)
-        console.log(res[0].password)
-})
+// user.find().lean().then(res=>{
+//         data1=res;
+//         console.log(res)
+//         console.log(res[0].name)
+//         console.log(res[0].email)
+//         console.log(res[0].contact)
+//         console.log(res[0].password)
+// })
+
+user.find(function (err, dt) {
+    if (err){
+        console.log(err);
+    }
+    else{
+        data1=dt;
+        // console.log(data1[0].name)
+        // console.log(data1[0].email)
+        // console.log(data1[0].contact)
+        // console.log(data1[0].password)
+    }
+});
 
 app.get("/", (req, res)=>{
     // const params={}
@@ -76,7 +89,7 @@ app.get("/", (req, res)=>{
 app.post("/contact", (req, res)=>{
     var mydata=new user(req.body)
     mydata.save().then(()=>{
-        console.log(req.body)
+        console.log(data1)
         // res.send("contact form saved")
         console.log('data saved')
     }).catch(()=>{
@@ -84,7 +97,7 @@ app.post("/contact", (req, res)=>{
         console.log('data not saved')
     })
     // res.status(200).sendFile("index.html", { root: __dirname })
-    res.status(200).sendFile( __dirname+"/index.html", {data: data})
+    res.status(200).sendFile( __dirname+"/index.html", {data: data1})
 })
 
 app.listen(port, ()=>{
