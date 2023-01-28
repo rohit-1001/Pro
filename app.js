@@ -15,11 +15,13 @@
 const express = require("express")
 const path = require("path")
 const bodyparser = require("body-parser")
+const fs=require('fs')        //temp
 const app=express()
 const port=80
 
 app.use("/static", express.static("static"))
 app.use(express.urlencoded({ extended: true }));
+var urlencodedParser=bodyparser.urlencoded({extended:true})             //temp
 app.use(express.json())
 app.set("view engine", 'html')
 app.set("views", path.join(__dirname, "views"))
@@ -54,28 +56,19 @@ const user = mongoose.model('user', schema);
 // user1.save();
 
 var data1;
-// user.find().lean().then(res=>{
-//         data1=res;
-//         console.log(res)
-//         console.log(res[0].name)
-//         console.log(res[0].email)
-//         console.log(res[0].contact)
-//         console.log(res[0].password)
-// })
-
 user.find(function (err, dt) {
     if (err){
         console.log(err);
     }
     else{
         data1=dt;
+        // console.log(data1)
         // console.log(data1[0].name)
         // console.log(data1[0].email)
         // console.log(data1[0].contact)
         // console.log(data1[0].password)
     }
 });
-
 app.get("/", (req, res)=>{
     // const params={}
     res.status(200).sendFile( __dirname+"/index.html", {data:data1})
@@ -85,18 +78,17 @@ app.get("/", (req, res)=>{
         data:data[0]
     })*/
 })
-
 app.post("/contact", (req, res)=>{
     var mydata=new user(req.body)
     mydata.save().then(()=>{
-        console.log(data1)
         // res.send("contact form saved")
         console.log('data saved')
     }).catch(()=>{
         // res.status(400).send("Some error occured")
-        console.log('data not saved')
+        console.log('data saving failed')
     })
-    // res.status(200).sendFile("index.html", { root: __dirname })
+    
+    // res.status(200).send(__dirname+"/index.html", {data: data1})
     res.status(200).sendFile( __dirname+"/index.html", {data: data1})
 })
 
